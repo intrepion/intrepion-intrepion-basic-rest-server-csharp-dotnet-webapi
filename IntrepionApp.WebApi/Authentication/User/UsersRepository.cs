@@ -50,13 +50,16 @@ public class UsersRepository : IUsersRepository
 
     public async Task<EditUserResponse?> EditUserAsync(UserEntity? currentUser, string userName, EditUserRequest editUserRequest)
     {
+        Console.WriteLine("EditUserAsync");
         if (userName is null)
         {
+            Console.WriteLine("userName is null");
             return null;
         }
 
         if (editUserRequest is null)
         {
+            Console.WriteLine("editUserRequest is null");
             return null;
         }
 
@@ -66,23 +69,28 @@ public class UsersRepository : IUsersRepository
 
         if (userEntity is null)
         {
+            Console.WriteLine("userEntity is null");
             return null;
         }
 
         if (currentUser is null)
         {
+            Console.WriteLine("currentUser is null");
             return null;
         }
 
         if (currentUser.UserName is null)
         {
+            Console.WriteLine("currentUser.UserName is null");
             return null;
         }
 
         if (!currentUser.UserName.Equals(userName))
         {
+            Console.WriteLine("currentUser.UserName is not equal to userName");
             if (!_userManager.IsInRoleAsync(currentUser, "Admin").Result)
             {
+                Console.WriteLine("currentUser is not admin");
                 return null;
             }
         }
@@ -93,6 +101,7 @@ public class UsersRepository : IUsersRepository
         {
             if (!editUserRequest.Confirm.Equals(editUserRequest.Password))
             {
+                Console.WriteLine("editUserRequest.Confirm is not equal to editUserRequest.Password");
                 return null;
             }
 
@@ -115,6 +124,7 @@ public class UsersRepository : IUsersRepository
 
         if (!result.Succeeded)
         {
+            Console.WriteLine("result is not succeeded");
             return null;
         }
 
