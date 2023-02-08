@@ -45,7 +45,24 @@ public class UsersController : ControllerBase, IUsersController
     [Route("{userName}")]
     public async Task<IActionResult> EditUserAsync(string userName, [FromBody] EditUserRequest editUserRequest)
     {
+        Console.WriteLine("EditUserAsync");
+        Console.WriteLine(HttpContext.User.Identity);
+        Console.WriteLine(HttpContext.User.Identity?.Name);
         var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+        Console.WriteLine(currentUser);
+        Console.WriteLine(currentUser?.UserName);
+        UserEntity? currentUser2 = null;
+        
+        if (HttpContext.User.Identity?.Name is not null)
+        {
+            currentUser2 = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+        }
+
+        if (currentUser2 is not null)
+        {
+            Console.WriteLine(currentUser2);
+            Console.WriteLine(currentUser2?.UserName);
+        }
 
         var editUserResponse = await _usersRepository.EditUserAsync(currentUser, userName, editUserRequest);
 
