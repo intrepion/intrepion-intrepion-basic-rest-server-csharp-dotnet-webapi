@@ -21,16 +21,19 @@ public class LogInsRepository : ILogInsRepository
     {
         if (makeLogInRequest is null)
         {
+            Console.WriteLine("makeLogInRequest is null");
             return null;
         }
 
         if (String.IsNullOrWhiteSpace(makeLogInRequest.Password))
         {
+            Console.WriteLine("makeLogInRequest.Password is null");
             return null;
         }
 
         if (String.IsNullOrWhiteSpace(makeLogInRequest.UserName))
         {
+            Console.WriteLine("makeLogInRequest.UserName is null");
             return null;
         }
 
@@ -38,6 +41,7 @@ public class LogInsRepository : ILogInsRepository
 
         if (!result.Succeeded)
         {
+            Console.WriteLine("result.Succeeded is false");
             return null;
         }
 

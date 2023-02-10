@@ -40,11 +40,29 @@ public class UsersController : ControllerBase, IUsersController
         return Ok(allUsersResponse);
     }
 
-    [AllowAnonymous]
+    [Authorize]
     [HttpPut]
     [Route("{userName}")]
     public async Task<IActionResult> EditUserAsync(string userName, [FromBody] EditUserRequest editUserRequest)
     {
+        if (editUserRequest is null)
+        {
+            Console.WriteLine("editUserRequest is null");
+            return BadRequest();
+        }
+
+        if (String.IsNullOrWhiteSpace(userName))
+        {
+            Console.WriteLine("userName is null");
+            return BadRequest();
+        }
+
+        if (HttpContext.User is null)
+        {
+            Console.WriteLine("HttpContext.User is null");
+            return BadRequest();
+        }
+
         Console.WriteLine("EditUserAsync");
         Console.WriteLine(HttpContext.User.Identity);
         Console.WriteLine(HttpContext.User.Identity?.Name);
@@ -53,6 +71,12 @@ public class UsersController : ControllerBase, IUsersController
         Console.WriteLine(currentUser?.UserName);
         UserEntity? currentUser2 = null;
         
+        if (currentUser == null)
+        {
+            Console.WriteLine("currentUser is null");
+            return BadRequest();
+        }
+
         if (HttpContext.User.Identity?.Name is not null)
         {
             currentUser2 = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
@@ -68,6 +92,7 @@ public class UsersController : ControllerBase, IUsersController
 
         if (editUserResponse is null)
         {
+            Console.WriteLine("editUserResponse is null");
             return BadRequest();
         }
 

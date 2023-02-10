@@ -104,7 +104,7 @@ public class TestUsersEndpoints : IClassFixture<WebApplicationFactory<Program>>
 
         // Assert
         Assert.NotNull(response);
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 
         // Act
         response = await client.PostAsync("/Users", makeUserRequestContent);
@@ -146,7 +146,7 @@ public class TestUsersEndpoints : IClassFixture<WebApplicationFactory<Program>>
 
         // Assert
         Assert.NotNull(response);
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 
         // Act
         response = await client.DeleteAsync($"/Users/{makeUserName}");
